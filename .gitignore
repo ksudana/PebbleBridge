@@ -1,0 +1,9 @@
+# Never commit secrets — the GitHub token lives only on the phone.
+.env
+*.token
+token.txt
+
+# Local scratch
+__pycache__/
+*.pyc
+.worker.log
