@@ -28,3 +28,14 @@ SF today: mostly sunny, high 67°F, low 58°F. West-southwest wind 10–20 mph. 
 
 Sources: [Weather.gov](https://forecast.weather.gov/MapClick.php?lat=37.7771&lon=-122.4196)
 
+
+## Thread `pbl-2026`
+
+**🎙️ Pebble** · 2026-08-09T00:54:58Z
+
+Tell me what the weather is today in San Francisco.
+
+**🤖 Worker** · 2026-08-09T00:55:21Z
+
+The weather in San Francisco today: I don't have live weather access, so I can't give you the current conditions. Try a weather app or asking a voice assistant with internet access.
+
