@@ -61,7 +61,7 @@ def now_iso() -> str:
 def write_message(directory: pathlib.Path, meta: dict, body: str,
                   stem: str | None = None) -> pathlib.Path:
     fields = ["schema_version", "id", "thread_id", "parent_id",
-              "sender", "created_at", "status"]
+              "sender", "created_at", "status", "watch_summary"]
     # Match the phone's frontmatter style: schema_version is a bare int, other
     # values are quoted strings (empty parent_id stays bare).
     def fmt(key: str) -> str:
@@ -85,6 +85,17 @@ def to_plain(text: str) -> str:
     text = re.sub(r"\[([^\]]+)\]\(([^)]+)\)", r"\1 (\2)", text)  # [t](url) -> t (url)
     text = re.sub(r"[*_`#>]", "", text)                          # emphasis/heading marks
     return text.strip()
+
+
+def summarize_for_watch(text: str, limit: int = 140) -> str:
+    """One short line for the watch screen: no newlines/quotes, truncated."""
+    import re
+    s = " ".join(text.split()).replace('"', "'")
+    first = re.split(r"(?<=[.!?])\s", s, maxsplit=1)[0] or s
+    line = first if len(first) <= limit else s
+    if len(line) > limit:
+        line = line[: limit - 1].rstrip() + "…"
+    return line
 
 
 # --------------------------------------------------------------------------- #
@@ -194,7 +205,7 @@ def run_once(dry_run: bool = False) -> int:
     changed: list[pathlib.Path] = []
     for req in pending:
         print(f"[info] processing {req['id']} …")
-        answer = process_with_claude(req, inbox)
+        answer = to_plain(process_with_claude(req, inbox))
         reply_meta = {
             "schema_version": SCHEMA_VERSION,
             "id": str(uuid.uuid4()),
@@ -203,8 +214,9 @@ def run_once(dry_run: bool = False) -> int:
             "sender": "worker",
             "created_at": now_iso(),
             "status": "complete",
+            "watch_summary": summarize_for_watch(answer),
         }
-        path = write_message(REPLIES, reply_meta, to_plain(answer), stem=req["id"])
+        path = write_message(REPLIES, reply_meta, answer, stem=req["id"])
         changed.append(path)
 
     render_conversation(load(INBOX), load(REPLIES))
