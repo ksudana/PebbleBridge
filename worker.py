@@ -208,7 +208,9 @@ def run_once(dry_run: bool = False) -> int:
         answer = to_plain(process_with_claude(req, inbox))
         reply_meta = {
             "schema_version": SCHEMA_VERSION,
-            "id": str(uuid.uuid4()),
+            # The app pairs a reply to its request by a matching `id` field, so
+            # the reply reuses the request id (as shown in the app's spec).
+            "id": req["id"],
             "thread_id": req.get("thread_id", req["id"]),
             "parent_id": req["id"],
             "sender": "worker",
