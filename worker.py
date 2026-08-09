@@ -58,7 +58,8 @@ def now_iso() -> str:
     return dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
-def write_message(directory: pathlib.Path, meta: dict, body: str) -> pathlib.Path:
+def write_message(directory: pathlib.Path, meta: dict, body: str,
+                  stem: str | None = None) -> pathlib.Path:
     fields = ["schema_version", "id", "thread_id", "parent_id",
               "sender", "created_at", "status"]
     # Match the phone's frontmatter style: schema_version is a bare int, other
@@ -69,7 +70,9 @@ def write_message(directory: pathlib.Path, meta: dict, body: str) -> pathlib.Pat
             return f"{key}: {val}"
         return f'{key}: "{val}"'
     front = "\n".join(fmt(k) for k in fields)
-    path = directory / f"{meta['id']}.md"
+    # The phone pairs a request with the reply of the *same filename*, so
+    # replies are named after the request id (passed as `stem`).
+    path = directory / f"{stem or meta['id']}.md"
     path.write_text(f"---\n{front}\n---\n\n{body.strip()}\n", encoding="utf-8")
     return path
 
@@ -191,7 +194,7 @@ def run_once(dry_run: bool = False) -> int:
             "created_at": now_iso(),
             "status": "complete",
         }
-        path = write_message(REPLIES, reply_meta, answer)
+        path = write_message(REPLIES, reply_meta, answer, stem=req["id"])
         changed.append(path)
 
     render_conversation(load(INBOX), load(REPLIES))
