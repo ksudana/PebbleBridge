@@ -124,7 +124,11 @@ def process_with_claude(request: dict, thread: list[dict]) -> str:
 
     prompt = (
         "You are answering voice notes dictated on a Pebble smartwatch. "
-        "Reply concisely and plainly — the answer is read on a tiny screen.\n\n"
+        "Reply concisely and plainly — the answer is read on a tiny screen.\n"
+        "You have WebSearch and WebFetch available. For anything time-sensitive "
+        "or factual — weather, news, prices, sports, schedules, current events — "
+        "you MUST use WebSearch to get live data rather than answering from memory "
+        "or saying you lack access. Only skip the web for timeless questions.\n\n"
         + (f"Conversation so far:\n{context}\n\n" if context else "")
         + f"New request:\n{request['body']}"
     )
