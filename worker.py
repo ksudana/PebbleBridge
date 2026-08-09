@@ -43,7 +43,12 @@ def parse_message(path: pathlib.Path) -> dict:
             for line in front.strip().splitlines():
                 if ":" in line:
                     key, _, val = line.partition(":")
-                    meta[key.strip()] = val.strip()
+                    val = val.strip()
+                    # The phone quotes string values (id: "pbl-…"); strip them
+                    # so ids compare cleanly and bodies aren't double-quoted.
+                    if len(val) >= 2 and val[0] == val[-1] and val[0] in "\"'":
+                        val = val[1:-1]
+                    meta[key.strip()] = val
     meta["body"] = body.strip()
     meta["_path"] = path
     return meta
@@ -56,7 +61,14 @@ def now_iso() -> str:
 def write_message(directory: pathlib.Path, meta: dict, body: str) -> pathlib.Path:
     fields = ["schema_version", "id", "thread_id", "parent_id",
               "sender", "created_at", "status"]
-    front = "\n".join(f"{k}: {meta.get(k, '')}" for k in fields)
+    # Match the phone's frontmatter style: schema_version is a bare int, other
+    # values are quoted strings (empty parent_id stays bare).
+    def fmt(key: str) -> str:
+        val = meta.get(key, "")
+        if key == "schema_version" or val == "":
+            return f"{key}: {val}"
+        return f'{key}: "{val}"'
+    front = "\n".join(fmt(k) for k in fields)
     path = directory / f"{meta['id']}.md"
     path.write_text(f"---\n{front}\n---\n\n{body.strip()}\n", encoding="utf-8")
     return path
