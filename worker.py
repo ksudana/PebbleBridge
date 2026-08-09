@@ -73,8 +73,18 @@ def write_message(directory: pathlib.Path, meta: dict, body: str,
     # The phone pairs a request with the reply of the *same filename*, so
     # replies are named after the request id (passed as `stem`).
     path = directory / f"{stem or meta['id']}.md"
-    path.write_text(f"---\n{front}\n---\n\n{body.strip()}\n", encoding="utf-8")
+    # Match the phone's exact layout: body starts immediately after the closing
+    # `---`, with no blank line (a blank line breaks its frontmatter parser).
+    path.write_text(f"---\n{front}\n---\n{body.strip()}\n", encoding="utf-8")
     return path
+
+
+def to_plain(text: str) -> str:
+    """Flatten markdown to plain text — the phone parser trips on links etc."""
+    import re
+    text = re.sub(r"\[([^\]]+)\]\(([^)]+)\)", r"\1 (\2)", text)  # [t](url) -> t (url)
+    text = re.sub(r"[*_`#>]", "", text)                          # emphasis/heading marks
+    return text.strip()
 
 
 # --------------------------------------------------------------------------- #
@@ -194,7 +204,7 @@ def run_once(dry_run: bool = False) -> int:
             "created_at": now_iso(),
             "status": "complete",
         }
-        path = write_message(REPLIES, reply_meta, answer, stem=req["id"])
+        path = write_message(REPLIES, reply_meta, to_plain(answer), stem=req["id"])
         changed.append(path)
 
     render_conversation(load(INBOX), load(REPLIES))
