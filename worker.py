@@ -131,7 +131,9 @@ def process_with_claude(request: dict, thread: list[dict]) -> str:
 
     try:
         res = subprocess.run(
-            ["claude", "-p", prompt],
+            # Pre-approve web tools so live questions (weather/news) can be
+            # answered without an interactive permission prompt.
+            ["claude", "-p", prompt, "--allowedTools", "WebSearch", "WebFetch"],
             text=True, capture_output=True, timeout=CLAUDE_TIMEOUT,
         )
     except FileNotFoundError:
