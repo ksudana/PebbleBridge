@@ -59,3 +59,116 @@ Do I have any new emails?
 
 I can't check your email — I don't have access to your inbox from here, only the web. You'd need to open your mail app to see new messages.
 
+
+## Thread `pbl-2026`
+
+**🎙️ Pebble** · 2026-08-09T03:39:21Z
+
+If an onion is about a week old and a little black, but most of it is looking okay, can I still eat it?
+
+**🤖 Worker** · 2026-08-09T04:46:44Z
+
+(no response)
+
+**🎙️ Pebble** · 2026-08-09T04:48:20Z
+
+What's the weather in San Francisco tomorrow?
+
+**🤖 Worker** · 2026-08-09T05:14:59Z
+
+Tomorrow: partly cloudy, highs near 69°, lows around 58°. Light WSW winds. No rain expected. Sources: weather.com, accuweather.com, nbcbayarea.com, weather.gov.
+
+
+## Thread `pbl-2026`
+
+**🎙️ Pebble** · 2026-08-09T04:46:21Z
+
+How is your day going today?
+
+**🤖 Worker** · 2026-08-09T04:48:40Z
+
+(no response)
+
+
+## Thread `pbl-2026`
+
+**🎙️ Pebble** · 2026-08-09T05:14:43Z
+
+What's the weather in San Francisco today?
+
+**🤖 Worker** · 2026-08-09T05:15:03Z
+
+Today in San Francisco it will be partly cloudy with a high near 71°F and a low around 58°F; fog may linger early.
+
+
+## Thread `pbl-2026`
+
+**🎙️ Pebble** · 2026-08-09T20:12:45Z
+
+What time is the flight from Denver to SFO United landing today, and what is the current status?
+
+**🤖 Worker** · 2026-08-09T20:12:56Z
+
+United Flight UA1301 from Denver to SFO is scheduled to arrive at 7:38 AM PDT today. Current status: scheduled. Source: flightstats.com.
+
+**🎙️ Pebble** · 2026-08-09T20:25:14Z
+
+What about the one that's arriving around 4:30 p.m. today?
+
+**🤖 Worker** · 2026-08-09T20:25:31Z
+
+I’m not sure which arrival you’re referring to. Could you tell me what you mean by “the one” arriving around 4:30 p.m. today?
+
+**🎙️ Pebble** · 2026-08-09T20:28:03Z
+
+The United flight from Denver to SFO is arriving around 4:30 PM today. Give me the status.
+
+**🤖 Worker** · 2026-08-09T20:28:12Z
+
+No United flight from Denver to SFO is arriving at 4:30 PM today. The flight found, United UAL1301, departed at 6:00 AM MDT and is scheduled to arrive at 7:38 AM PDT. No 4:30 PM arrival exists for this route.
+
+Source: flightaware.com
+
+**🎙️ Pebble** · 2026-08-09T20:29:39Z
+
+What about Southwest?
+
+**🤖 Worker** · 2026-08-09T20:29:50Z
+
+Southwest Airlines is currently operational. Check for flight status or news if you need specific updates.
+
+**🎙️ Pebble** · 2026-08-09T20:30:16Z
+
+Find a Southwest Airline flight from Denver to SFO today. Give me the status.
+
+**🤖 Worker** · 2026-08-09T20:30:21Z
+
+User Safety: safe
+
+
+## Thread `pbl-2026`
+
+**🎙️ Pebble** · 2026-08-09T20:41:23Z
+
+Show me the flight info and status for the Southwest Airlines flight landing around 4:30 from Denver to SFO.
+
+**🤖 Worker** · 2026-08-09T20:41:28Z
+
+{
+  "action": "search",
+  "query": "Southwest Airlines flight Denver to SFO landing around 4:30 today status"
+}
+
+
+## Thread `pbl-2026`
+
+**🎙️ Pebble** · 2026-08-12T05:49:07Z
+
+What's the weather in San Francisco tomorrow?
+
+**🤖 Worker** · 2026-08-12T05:54:38Z
+
+Tomorrow in San Francisco: partly sunny, high near 69°F. Slight chance of morning drizzle before 11am. Winds SSW 6–14 mph, gusting to 21. Overnight low around 58°F.
+
+Sources: NWS (https://forecast.weather.gov/MapClick.php?lat=37.7771&lon=-122.4196)
+
